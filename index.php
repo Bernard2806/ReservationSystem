@@ -177,13 +177,14 @@ $esAdmin = isset($_SESSION['EsAdmin']) && $_SESSION['EsAdmin'] == true;
         </div>
     <?php endif; ?>
     <br>
+
     <footer>
         <div class="contenedor-footer">
             <div class="cont-foo">
                 <h4>Telefono</h4>
                 <p>
-                    <a href="https://wa.me/5492346431330" style="color: white;">
-                        <i class="bi bi-whatsapp"></i> 2346-431330
+                    <a href="tel:02346431330" style="color: white;">
+                        <i class="bi bi-telephone-fill"></i> 2346-431330
                     </a>
                 </p>
             </div>
