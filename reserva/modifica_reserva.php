@@ -122,6 +122,7 @@ require '../include/VerificacionAdmin.php'
 
     <br>
     <br>
+
     <footer>
         <div class="contenedor-footer">
             <div class="cont-foo">
@@ -141,6 +142,7 @@ require '../include/VerificacionAdmin.php'
             <h3>&copy; 7to "B" 2024 | EEST N° 1 | Profesor: Sergio Caffaro</h3>
         </div>
     </footer>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </body>
 

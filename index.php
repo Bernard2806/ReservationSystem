@@ -15,11 +15,8 @@ $esAdmin = isset($_SESSION['EsAdmin']) && $_SESSION['EsAdmin'] == true;
     <link rel="stylesheet" href="css\estilo.css">
     <link rel="icon" href="img\logo.svg" type="image/svg+xml">
     <?php
-    date_default_timezone_set('America/Argentina/Buenos_Aires');
     $fecha_actual = date('Y/m/d');
     include('include/conexion.php');
-    $consulta1 = "select count(distinct ID) as ID from tabla";
-    $consulta2 = "SELECT * FROM tabla";
     $consulta_ordenada = "SELECT * FROM tabla ORDER BY ABS(DATEDIFF(fecha, '$fecha_actual')) ASC";
     $consulta_borrar = "DELETE FROM tabla WHERE fecha < '" . $fecha_actual . "'";
     mysqli_query($conexion, $consulta_borrar) or die('Error en consulta de fechas');
