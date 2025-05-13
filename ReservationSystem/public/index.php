@@ -2,7 +2,7 @@
 
 <!-- Encabezado principal -->
 <section class="relative h-[420px] bg-[#1e293b]">
-    <img src="assets\img\School.webp" alt="Foto de la escuela"
+    <img src="assets/img/School.webp" alt="Foto de la escuela"
         class="w-full h-full object-cover opacity-30 absolute inset-0">
     <div class="relative z-10 flex items-center justify-center h-full">
         <div class="text-center text-white px-6">
