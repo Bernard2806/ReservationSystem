@@ -1,3 +1,11 @@
+<!--
+Archivo centralizado para la carga de frameworks y dependencias
+ReservationSystem - EEST N° 1 Chivilcoy
+
+Sistema de reservas para la EEST N° 1 Chivilcoy
+Creado por: Bernardo Andrés, González Erramuspe
+-->
+
 <!-- Tailwind CSS -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
 
