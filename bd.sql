@@ -1,94 +1,37 @@
--- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
---
--- Servidor: sql209.infinityfree.com
--- Tiempo de generación: 09-08-2024 a las 20:46:57
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.2.22
+-- Tabla de usuarios (incluye datos personales)
+CREATE TABLE usuarios (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  usuario VARCHAR(50) NOT NULL,
+  clave VARCHAR(255) NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  apellido VARCHAR(50) NOT NULL,
+  email VARCHAR(100),
+  telefono VARCHAR(20),
+  tipo ENUM('docente', 'alumno', 'externo') DEFAULT 'docente',
+  esAdmin TINYINT(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- Tabla de espacios
+CREATE TABLE espacios (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  descripcion TEXT,
+  capacidad INT DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `if0_34848196_reserva`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tabla`
---
-
-CREATE TABLE `tabla` (
-  `ID` int(11) NOT NULL,
-  `nombreapellido` varchar(100) NOT NULL,
-  `curso` varchar(45) NOT NULL,
-  `materia` varchar(45) DEFAULT NULL,
-  `horario` time NOT NULL,
-  `horario1` time NOT NULL,
-  `fecha` date NOT NULL,
-  `info` varchar(50) NOT NULL,
-  `materiales` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `ID` int(11) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
-  `clave` varchar(255) NOT NULL,
-  `NombreYApellido` varchar(255) NOT NULL,
-  `esAdmin` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
-
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `tabla`
---
-ALTER TABLE `tabla`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `tabla`
---
-ALTER TABLE `tabla`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Tabla de reservas
+CREATE TABLE reservas (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  espacio_id INT NOT NULL,
+  curso VARCHAR(45),
+  materia VARCHAR(45),
+  horario_inicio TIME NOT NULL,
+  horario_fin TIME NOT NULL,
+  fecha DATE NOT NULL,
+  info VARCHAR(100) NOT NULL,
+  materiales TEXT,
+  estado ENUM('pendiente', 'aprobada', 'rechazada') DEFAULT 'pendiente',
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(ID) ON DELETE CASCADE,
+  FOREIGN KEY (espacio_id) REFERENCES espacios(ID) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
