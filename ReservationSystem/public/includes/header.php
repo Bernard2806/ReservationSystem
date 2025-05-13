@@ -1,19 +1,5 @@
 <?php
-/**
- * Componente Header del sistema de reservas
- * ReservationSystem - EEST N° 1 Chivilcoy
- * 
- * Sistema de reservas para la EEST N° 1 Chivilcoy
- * Creado por: Bernardo Andrés, González Erramuspe
- */
-
-// Asegurarse de que se haya calculado una versión
-if (!isset($GLOBALS['version'])) {
-    include_once 'version.php';
-}
-
-// Detectar la página actual para destacarla en el menú
-$current_page = basename($_SERVER['PHP_SELF']);
+require_once __DIR__ . '/../../vendor/autoload.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,149 +8,92 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReservationSystem - EEST N° 1 Chivilcoy</title>
-    <meta name="description" content="Sistema de reservas para espacios de la EEST N° 1 Chivilcoy">
-    <meta name="author" content="Bernardo Andrés González Erramuspe">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <title>Sistema de Reservas - Escuela Técnica</title>
 
     <!-- Incluir frameworks y dependencias -->
     <?php include_once 'frameworks.php'; ?>
-
+    
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-    <!-- Barra de navegación -->
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo y nombre del sistema -->
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header/Navbar -->
+    <header class="bg-indigo-700 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo y título -->
                 <div class="flex items-center space-x-3">
-                    <a href="index.php" class="flex items-center">
-                        <img src="../assets/img/logo.png" alt="Logo EEST N°1" class="h-10 w-auto">
-                        <span class="ml-3 text-xl font-bold text-gray-800">ReservationSystem</span>
-                    </a>
+                    <i class="ti ti-calendar-event text-2xl"></i>
+                    <h1 class="text-xl font-bold">Sistema de Reservas</h1>
                 </div>
 
                 <!-- Menú de navegación -->
-                <nav class="hidden md:flex space-x-6">
-                    <a href="index.php"
-                        class="<?= $current_page == 'index.php' ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' ?> transition-colors duration-200">
-                        <i class="ti ti-home text-lg align-middle"></i>
-                        <span class="ml-1">Inicio</span>
-                    </a>
-                    <a href="reservations.php"
-                        class="<?= $current_page == 'reservations.php' ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' ?> transition-colors duration-200">
-                        <i class="ti ti-calendar-event text-lg align-middle"></i>
-                        <span class="ml-1">Reservas</span>
-                    </a>
-                    <a href="spaces.php"
-                        class="<?= $current_page == 'spaces.php' ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' ?> transition-colors duration-200">
-                        <i class="ti ti-building text-lg align-middle"></i>
-                        <span class="ml-1">Espacios</span>
-                    </a>
-                    <a href="reports.php"
-                        class="<?= $current_page == 'reports.php' ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' ?> transition-colors duration-200">
-                        <i class="ti ti-report text-lg align-middle"></i>
-                        <span class="ml-1">Informes</span>
-                    </a>
-                </nav>
+                <nav x-data="{ isOpen: false }" class="relative">
+                    <!-- Navegación para escritorio -->
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="index.php" class="hover:text-indigo-200 font-medium transition">Inicio</a>
+                        <a href="reservas.php" class="hover:text-indigo-200 font-medium transition">Reservas</a>
+                        <a href="espacios.php" class="hover:text-indigo-200 font-medium transition">Espacios</a>
+                        <a href="calendario.php" class="hover:text-indigo-200 font-medium transition">Calendario</a>
 
-                <!-- Menú de usuario -->
-                <div class="flex items-center space-x-4">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <!-- Usuario logueado -->
-                        <div x-data="{ isOpen: false }" class="relative">
-                            <button @click="isOpen = !isOpen"
-                                class="flex items-center text-gray-700 hover:text-blue-600 focus:outline-none">
-                                <i class="ti ti-user-circle text-2xl"></i>
-                                <span class="ml-2 hidden md:inline"><?= $_SESSION['username'] ?? 'Usuario' ?></span>
-                                <i class="ti ti-chevron-down ml-1 text-sm"></i>
+                        <!-- Botón de perfil -->
+                        <div x-data="{ isProfileOpen: false }" class="relative">
+                            <button @click="isProfileOpen = !isProfileOpen"
+                                class="flex items-center space-x-1 focus:outline-none">
+                                <i class="ti ti-user-circle text-xl"></i>
+                                <span>Usuario</span>
+                                <i class="ti ti-chevron-down text-sm transition"
+                                    :class="{'transform rotate-180': isProfileOpen}"></i>
                             </button>
 
-                            <!-- Menú desplegable -->
-                            <div x-show="isOpen" @click.away="isOpen = false"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
-                                x-transition:enter-end="transform opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="transform opacity-100 scale-100"
-                                x-transition:leave-end="transform opacity-0 scale-95"
+                            <!-- Menú desplegable del perfil -->
+                            <div x-show="isProfileOpen" @click.away="isProfileOpen = false"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-100"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95" x-cloak
                                 class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-
-                                <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="ti ti-settings text-lg align-middle"></i>
-                                    <span class="ml-2">Mi perfil</span>
-                                </a>
-                                <a href="my_reservations.php"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="ti ti-calendar-check text-lg align-middle"></i>
-                                    <span class="ml-2">Mis reservas</span>
-                                </a>
-                                <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
-                                    <a href="admin/dashboard.php"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        <i class="ti ti-dashboard text-lg align-middle"></i>
-                                        <span class="ml-2">Panel admin</span>
-                                    </a>
-                                <?php endif; ?>
+                                <a href="perfil.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Mi
+                                    Perfil</a>
+                                <a href="ajustes.php"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Ajustes</a>
                                 <hr class="my-1">
-                                <a href="logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
-                                    <i class="ti ti-logout text-lg align-middle"></i>
-                                    <span class="ml-2">Cerrar sesión</span>
-                                </a>
+                                <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Cerrar
+                                    Sesión</a>
                             </div>
                         </div>
-                    <?php else: ?>
-                        <!-- Usuario no logueado -->
-                        <a href="login.php"
-                            class="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                            <i class="ti ti-login text-lg align-middle"></i>
-                            <span class="ml-1 hidden md:inline">Ingresar</span>
-                        </a>
-                    <?php endif; ?>
+                    </div>
 
                     <!-- Botón de menú móvil -->
-                    <button class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none" x-data="{}"
-                        @click="document.querySelector('#mobile-menu').classList.toggle('hidden')">
+                    <button @click="isOpen = !isOpen" class="md:hidden flex items-center">
                         <i class="ti ti-menu-2 text-2xl"></i>
                     </button>
-                </div>
-            </div>
 
-            <!-- Menú móvil -->
-            <div id="mobile-menu" class="md:hidden hidden pb-4">
-                <a href="index.php"
-                    class="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md <?= $current_page == 'index.php' ? 'bg-gray-100 text-blue-600' : '' ?>">
-                    <i class="ti ti-home text-lg align-middle"></i>
-                    <span class="ml-2">Inicio</span>
-                </a>
-                <a href="reservations.php"
-                    class="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md <?= $current_page == 'reservations.php' ? 'bg-gray-100 text-blue-600' : '' ?>">
-                    <i class="ti ti-calendar-event text-lg align-middle"></i>
-                    <span class="ml-2">Reservas</span>
-                </a>
-                <a href="spaces.php"
-                    class="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md <?= $current_page == 'spaces.php' ? 'bg-gray-100 text-blue-600' : '' ?>">
-                    <i class="ti ti-building text-lg align-middle"></i>
-                    <span class="ml-2">Espacios</span>
-                </a>
-                <a href="reports.php"
-                    class="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md <?= $current_page == 'reports.php' ? 'bg-gray-100 text-blue-600' : '' ?>">
-                    <i class="ti ti-report text-lg align-middle"></i>
-                    <span class="ml-2">Informes</span>
-                </a>
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    <a href="login.php"
-                        class="block py-2 px-4 text-gray-600 hover:bg-gray-100 rounded-md <?= $current_page == 'login.php' ? 'bg-gray-100 text-blue-600' : '' ?>">
-                        <i class="ti ti-login text-lg align-middle"></i>
-                        <span class="ml-2">Ingresar</span>
-                    </a>
-                <?php endif; ?>
+                    <!-- Menú móvil -->
+                    <div x-show="isOpen" @click.away="isOpen = false"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                        x-cloak class="absolute right-0 mt-3 w-48 bg-white rounded-md shadow-lg py-2 z-50">
+                        <a href="index.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Inicio</a>
+                        <a href="reservas.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Reservas</a>
+                        <a href="espacios.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Espacios</a>
+                        <a href="calendario.php"
+                            class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Calendario</a>
+                        <hr class="my-1">
+                        <a href="perfil.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Mi Perfil</a>
+                        <a href="ajustes.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Ajustes</a>
+                        <a href="logout.php" class="block px-4 py-2 text-gray-800 hover:bg-indigo-100">Cerrar Sesión</a>
+                    </div>
+                </nav>
             </div>
         </div>
     </header>
