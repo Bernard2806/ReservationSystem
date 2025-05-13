@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-8 border-t border-blue-400/30 pt-4 text-center text-sm text-white/70">
-            &copy; <?php echo date('Y'); ?> EEST N°1 Chivilcoy. Todos los derechos reservados.
+            &copy; <?php echo date('Y'); ?> Escuela de Educación Secundaria Técnica N°1 "Mariano Moreno" de Chivilcoy. Todos los derechos reservados.
         </div>
     </div>
 
