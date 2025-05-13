@@ -26,32 +26,6 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - EEST N° 1' : 'EEST N° 1 Chiv
         userMenuOpen: false,
         isAdmin: true // Esto deberá ser dinámico según el rol del usuario
     }" class="relative bg-gradient-to-r from-indigo-600 to-blue-500 text-white shadow-lg">
-        <!-- Franja superior con información de contacto -->
-        <div class="hidden lg:block bg-indigo-800 py-1.5">
-            <div class="container mx-auto px-4 flex justify-between items-center text-sm">
-                <div class="flex items-center space-x-4">
-                    <span class="flex items-center">
-                        <i class="ti ti-map-pin text-indigo-300 mr-1.5"></i>
-                        Av. Educación Técnica 1234, Chivilcoy
-                    </span>
-                    <span class="flex items-center">
-                        <i class="ti ti-phone text-indigo-300 mr-1.5"></i>
-                        (02346) 123-4567
-                    </span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <a href="#" class="text-indigo-200 hover:text-white transition">
-                        <i class="ti ti-brand-facebook"></i>
-                    </a>
-                    <a href="#" class="text-indigo-200 hover:text-white transition">
-                        <i class="ti ti-brand-instagram"></i>
-                    </a>
-                    <a href="#" class="text-indigo-200 hover:text-white transition">
-                        <i class="ti ti-brand-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
 
         <!-- Contenido principal del header -->
         <div class="container mx-auto px-4">
@@ -191,29 +165,6 @@ $pageTitle = isset($pageTitle) ? $pageTitle . ' - EEST N° 1' : 'EEST N° 1 Chiv
                         class="w-full flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 px-4 rounded-lg transition">
                         <i class="ti ti-user mr-2"></i> Iniciar Sesión
                     </button>
-
-                    <!-- Información de contacto en móvil -->
-                    <div class="mt-4 text-sm text-gray-500 space-y-2">
-                        <div class="flex items-center">
-                            <i class="ti ti-map-pin text-indigo-500 mr-2"></i>
-                            <span>Av. Educación Técnica 1234, Chivilcoy</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="ti ti-phone text-indigo-500 mr-2"></i>
-                            <span>(02346) 123-4567</span>
-                        </div>
-                        <div class="flex items-center space-x-3 mt-2">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
-                                <i class="ti ti-brand-facebook"></i>
-                            </a>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
-                                <i class="ti ti-brand-instagram"></i>
-                            </a>
-                            <a href="#" class="text-indigo-600 hover:text-indigo-800">
-                                <i class="ti ti-brand-youtube"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
