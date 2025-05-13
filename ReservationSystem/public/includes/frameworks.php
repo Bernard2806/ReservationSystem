@@ -7,7 +7,7 @@ Creado por: Bernardo Andrés, González Erramuspe
 -->
 
 <!-- Tailwind CSS -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <!-- FullCalendar (CSS y JS) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/bootstrap/main.min.css" rel="stylesheet">
